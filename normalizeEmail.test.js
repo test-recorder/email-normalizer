@@ -17,3 +17,14 @@ test('normalizes mixed-case domain to lowercase', () => {
 test('preserves already valid lowercase email', () => {
   assert.equal(normalizeEmail('alex@example.com'), 'alex@example.com');
 });
+test('normalize complex multi-part subdomains correctly', () => {
+  assert.equal(
+    normalizeEmail('support@DEV.MAIL.SERVICE.ORG'),
+    'support@dev.mail.service.org'
+  );
+});
+test('handles invalid primitive inputs safely without throwing', () => {
+  assert.equal(normalizeEmail(undefined), '');
+  assert.equal(normalizeEmail(1024), '')
+  assert.equal(normalizeEmail({}), '');
+});
